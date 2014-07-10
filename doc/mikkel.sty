@@ -1,0 +1,167 @@
+% The LaTeX package for Mikkel Kjær Jensen
+\ProvidesPackage{mikkel}
+\newif\ifPDF
+\ifx\pdfoutput\undefined\PDFfalse
+\else\ifnum\pdfoutput > 0 \PDFtrue
+    	\else\PDFfalse
+		\fi
+\fi
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{fixme}
+\usepackage{enumerate}
+\usepackage{verbatim}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{listing}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{verbatim}
+\usepackage[small]{caption}
+\usepackage{afterpage}
+\usepackage{fancyhdr}
+\usepackage{subfig}
+\usepackage{acronym}
+\usepackage{multirow}
+\usepackage[section]{placeins}
+
+\captionsetup{justification=justified}
+\usepackage[final]{listings}
+
+%\usepackage{ulem}
+
+\usepackage{tikz} % For figures
+\usepackage{pgfplots}
+\usetikzlibrary{shapes, snakes, patterns}
+%\ifPDF
+%	\usepackage[pdftex]{hyperref}
+%        \usepackage[pdftex]{graphicx}
+	
+%\else
+%	\usepackage[dvips]{graphicx}
+%	\usepackage[dvips]{hyperref}
+%\fi
+
+\lstset{ %
+language=Python,                % choose the language of the code
+basicstyle=\scriptsize,       % the size of the fonts that are used for the code
+numbers=left,                   % where to put the line-numbers
+numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,                   % the step between two line-numbers. If it's 1 each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+%backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=true,         % underline spaces within strings
+showtabs=true,                 % show tabs within strings adding particular underscores
+frame=single,	                % adds a frame around the code
+tabsize=2,	                % sets default tabsize to 2 spaces
+captionpos=b,                   % sets the caption-position to bottom
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=true,        % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)}          % if you want to add a comment within your code
+}
+% Pages styles (master pages)
+\makeatletter
+\newcommand{\sqbox}{\hfill$\square$}
+\newcommand{\hide}[1]{}
+\newcommand{\E}[1]{\{#1\}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\eqa}[1]{\begin{eqnarray*}#1\end{eqnarray*}}
+\newcommand{\eqn}[1]{\begin{eqnarray}#1\end{eqnarray}}
+
+%Fixme's
+\newcommand{\todo}[1]{}
+%\newcommand{\todo}[1]{\fxfatal{#1}}
+\newcommand{\todoNote}[2]{\fxnote{#1}{#2}}
+\newcommand{\justify}[1]{\texttt{Write a justification for this}\fxfatal{Write a justification for this: #1}}
+\newcommand{\cinclude}[1]{
+\acresetall
+\include{#1}
+}
+\usepackage{url}
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\ttfamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
+
+
+\newcommand{\eqaref}[1]{(equation \ref{#1})}
+
+\newcommand{\pref}[1]{See Section \ref{#1} p. \pageref{#1}}
+\newcommand{\nref}[1]{see Section \ref{#1} p. \pageref{#1}}
+
+\newcommand{\highlights}{
+
+}
+
+\theoremstyle{definition} \newtheorem{lemma}{Lemma}
+\theoremstyle{plain} \newtheorem{theo}{Theorem}
+\theoremstyle{definition} \newtheorem{defi}{Def}
+
+\newcommand{\includeTable}[1]{
+\subsection{#1}
+\label{table:#1}
+\tinysize{
+\include{./data/tables/#1}
+}
+}
+
+\newcommand{\route}[3]
+{
+\item[#1:] \cite{#3} 
+#2
+}
+
+
+\newcommand{\tikfig}[2]{
+\begin{figure}
+\centering
+\tigz{#1}
+\caption{\label{fig:#1}#2}
+\end{figure}
+}
+
+\newcommand{\tikgraph}[2]{
+\begin{figure}
+\centering
+\input{figures/graph/#1.tex}
+\caption{\label{graph:#1}#2}
+\end{figure}
+}
+
+\newcommand{\graphResult}[3]{
+\begin{figure}[!hbp]
+\centering
+\input{results/#1.tex}
+\caption{\label{graph:#3}#2}
+\end{figure}
+}
+
+\newcommand{\tableResult}[4]{
+\begin{table}[!hb]
+#4{
+\begin{center}
+\input{results/#1.tex}
+\end{center}
+}
+\caption{\label{table:#3}#2}
+\end{table}
+}
+
+\newcommand{\tigz}[1]{\input{figures/tikz/#1.tex}}
+\newcommand{\figref}[1]{see figure~\ref{#1}}
+
+\newcommand{\src}[1]{
+\subsection{#1.cpp}
+\label{code:#1}
+\lstinputlisting{../src/C++/#1.cpp}
+}
