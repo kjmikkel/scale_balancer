@@ -1,2 +1,56 @@
 \section{Introduction}
 
+\section{Informal definition}
+
+This small project tries to effectively create small ``scale puzzles''. A scale puzzle is a puzzle where you have a scale with 2 pans. Each of the pans have two types of weights associated with it. No two types of weights weigh the same. The object is now to make the scale balance using only the weights (and preferably only using a few of these weights).
+
+\section{Formal definition}
+
+We are trying to solve the following problem:
+\eqn{
+\label{problem}
+n_1 * k_1 + n_2 * k_2 = n_3 * k_3 + n_4 * k_4
+}
+
+where $\forall i \in \E{1,2,3,4}\; n_i \in \N \cup \E{0}, k_i \in \N$ with the constraints 
+\eqn{
+\label{limit_constraint}
+\forall i \in \E{1,2,3,4}\; 0 \leq n_i \leq 6
+}
+
+\eqn{
+\label{sum_constraint}
+3 \leq \sum_{i=1}^{4}n_i \leq 6 
+}
+
+\eqn{
+\label{pairwise_distinct}
+\forall i,j \in \E{1,2,3,4}, i \neq j\; k_i \neq k_j 
+}
+
+and furthermore 
+
+\eqn{
+\label{balance_constraint}
+1 \leq n_1 + n_2, 1 \leq n_3 + n_4
+}
+
+
+
+$n_i$ is the number of weights, while $k_i$ is the weight of that perticular type of weight.
+
+The reason for constraint \ref{limit_constraint} is that we want to limit the number of weights to make the problem managble. It is possible that this constraint will be remove in the future if we get a handle on it. The number of weights ($n_i$ will however never be negative).
+
+The reason for constraint \ref{sum_constraint} is there to avoid certain degenerate edge cases, that I will list now:
+
+\begin{enumerate}
+\item If $\sum_{i=1}^{4} n_i = 0$ then no weights have been placed, this is of course absurd, since all scale-puzzles could then be solved in this manner.
+\item If $\sum_{i=1}^{4} n_i = 1$, then without loss of generality assume that $i = 1$, then we have that 
+\eqa{
+&n_1 * k_1 = 0 \Leftrightarrow\\
+&1 * k_1 = 0 \Leftrightarrow\\
+&k_1 = 0
+}
+which is nonsencial.
+\item If $\sum_{i=1}^{4} n_i = 2$ then there is either two weights on one pan, or one weight on two pans. In the first case they would again both have to weigh 0 units for the puzzle to be solvable (see above), and in the second case both weights would have to have the same weight (see constraint \ref{pairwise_distinct}). Also it does 
+\end{enumerate}
